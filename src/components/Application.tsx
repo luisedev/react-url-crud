@@ -8,18 +8,33 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import urlStore, { IUrl } from '../stores/urlStore';
+import { observer } from 'mobx-react';
 
 
-//import del store
 
-interface IUrl {
-  name: string;
-  done: boolean;
+//State definitions
+interface IUrlState {
+  textInput: string;
+  urls: IUrl[];
 }
-//@observer
-function Application(): JSX.Element {
+interface AppProps { }
+@observer
+class Application extends React.Component<AppProps, IUrlState> {
 
-  const useStyles = makeStyles((theme: Theme) =>
+  constructor(props: AppProps) {
+    super(props);
+    this.state = { textInput: "", urls: [] };
+  }
+
+  loadData():void {
+    this.setState({ urls: urlStore.urls });
+  }
+  componentDidMount():void {
+    this.loadData();
+  }
+
+  useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         flexGrow: 1,
@@ -35,83 +50,54 @@ function Application(): JSX.Element {
     }),
   );
 
-
-  const classes = useStyles();
-  //State definitions
-  const [newUrl, setNewUrl] = useState<string>('')
-
-
-  type FormElement = React.FormEvent<HTMLFormElement>;
-  //getURLs from localstorage
-  const getUrls = () => {
-    return oldUrls;
-  }
-  const oldUrls: IUrl[] = JSON.parse(localStorage.getItem('urls') || '');
-  const [Urls, setUrls] = useState<IUrl[]>(oldUrls)
-
   //Submit Handler
-  const handleSubmit = (e: FormElement) => {
-    e.preventDefault();
-    addUrl(newUrl)
-    setNewUrl('');
+  handleSubmit = () => {
+    urlStore.addUrl(this.state.textInput)
   }
 
-  //Adds an URL
-  const addUrl = (name: string): void => {
-    const newUrl: IUrl[] = [...Urls, { name, done: false }]
-    setUrls(newUrl);
-    localStorage.setItem('urls', JSON.stringify(newUrl));
-  }
-  //Crossthrough an URL
-  const toggleDoneUrl = (i: number): void => {
-    const newUrls: IUrl[] = [...Urls];
-    newUrls[i].done = !newUrls[i].done;
-    setUrls(newUrls);
-    localStorage.setItem('urls', JSON.stringify(newUrls));
-  }
-  //Removes an URL
-  const removeUrl = (i: number): void => {
-    const newUrls: IUrl[] = [...Urls];
-    newUrls.splice(i, 1);
-    setUrls(newUrls);
-    localStorage.setItem('urls', JSON.stringify(newUrls));
-  }
+
   //The function returns a React Fragment with a form and all the registered URLS
-  return (
+  render(): JSX.Element {
+    // const classes = this.useStyles();
+    return (
 
-    <Container className={classes.root} onLoad={getUrls}>
-      <Grid container spacing={3} className={classes.root}>
-        <Grid item xs={12} >
-          <form onSubmit={handleSubmit}>
-            <TextField type="text" onChange={e => setNewUrl(e.target.value)} value={newUrl} />
-            <Button variant="outlined" type="submit" color="primary">
-              Save
-            </Button>
-          </form>
+      <Container >
+        <Grid container spacing={3} >
+          <Grid item xs={12} >
+            <form onSubmit={this.handleSubmit}>
+              <TextField type="text" onChange={e => this.setState({ textInput: e.target.value })} value={this.state.textInput} />
+              <Button variant="outlined" type="button" color="primary">
+                Save
+              </Button>
+            </form>
+          </Grid>
+          {
+
+            this.state.urls.map((t: IUrl, i: number) => (
+              <Grid item xs={12} sm={6} key={i}>
+                <Card key={i}>
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                      Info:
+                    </Typography>
+                    <Typography color="textSecondary" gutterBottom>
+                      <a href={t.done ? '/' : t.name} rel="noreferrer" target="_blank" style={{ textDecoration: t.done ? 'line-through' : '' }} >{t.name}</a>
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button onClick={() => {urlStore.toggleDoneUrl(i);this.loadData()}}> {t.done ? '✔️' : '❌'}</Button>
+                    <Button onClick={() => {urlStore.removeUrl(i); this.loadData()}}>🗑️</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))
+          }
         </Grid>
-        {
-          Urls.map((t: IUrl, i: number) => (
-            <Grid item xs={12} sm={6} key={i}>
-              <Card key={i}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Info:
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    <a href={t.done ? '/' : t.name} rel="noreferrer" target="_blank" style={{ textDecoration: t.done ? 'line-through' : '' }} >{t.name}</a>
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button onClick={() => toggleDoneUrl(i)}> {t.done ? '✔️' : '❌'}</Button>
-                  <Button onClick={() => removeUrl(i)}>🗑️</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))
-        }
-      </Grid>
-    </Container>
-  );
+      </Container>
+    );
+
+  }
+
 }
 
 export default Application;
