@@ -1,9 +1,5 @@
 import React from 'react';
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
-import emulacion from '../static/images/emulacion.png';
-import microfrontends from '../static/images/microfrontends.png';
-import phishing from '../static/images/phishing.png';
-import consejos from '../static/images/consejos.png';
 import Profile from './Profile';
 import { IArticle } from "../interfaces/IArticle";
 
