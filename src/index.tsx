@@ -1,15 +1,25 @@
+import { Container } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Header from './components/Header';
+
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App></App>
-  </React.StrictMode>,
+  <div>
+    
+      <Header />
+      <Container fixed>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Container>
+  </div>,
   document.getElementById('root')
+
 );
 
 // If you want to start measuring performance in your app, pass a function

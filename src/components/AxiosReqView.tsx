@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import '../scss/axios.scss';
 interface IPost {
     id: number;
     userId?: number;
