@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Application from '../components/Application';
 import Error from '../components/Error';
 import AxiosReqView from '../components/AxiosReqView';
+import Home from '../components/Home';
 
 class Router extends Component {
     render(): JSX.Element {
@@ -13,12 +14,12 @@ class Router extends Component {
                     <Redirect
                         exact
                         from="/"
-                        to="/urls" />
+                        to="/home" />
 
                     <Route exact path="/sincomponente" render={() => (
                         <h1> Soy una ruta sin componente </h1>
                     )} />
-                    
+                    <Route path="/home" component={Home} ></Route>
                     <Route path="/urls" component={Application} ></Route>
                     <Route path="/axios" component={AxiosReqView} ></Route>
                     <Route exact path="/parametros/:id/:nombre/:apellidos?" render={(props) => {
