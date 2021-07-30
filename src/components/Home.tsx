@@ -81,7 +81,6 @@ class Home extends React.Component {
                         </Grid>
                         ))
                         }
-                    
                 </Grid>
 
             </Grid>
