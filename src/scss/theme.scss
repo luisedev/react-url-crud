@@ -1,0 +1,43 @@
+$colors: (
+    bgPrimaryTop: #fc466b,
+    bgPrimaryBottom: #3f5efb,
+    navbarBg: rgba(51, 51, 51, 0.897),
+    cardBg: rgba(255, 255, 255, 0.116),
+    cardShadow: #0f173d8c,
+    cardActionsbg: rgba(19, 18, 18, 0.76),
+    h2TextColor: rgba(41, 40, 40, 0.849),
+    pTextColor: rgb(24, 24, 24),
+    aTextColor: black,
+    spanTextColor: white,
+    ulBgColor: rgba(19, 18, 18, 0.863),
+    infoButtonHoverBG: #1f090ddc,
+    btnUrlBgColor: #1f090ddc,
+  );
+
+html {
+  background: linear-gradient(
+    90deg,
+    map-get($colors, bgPrimaryTop),
+    map-get($colors, bgPrimaryBottom)
+  );
+}
+h2 {
+  color: map-get($colors, h2TextColor) !important;
+  font-weight: 550 !important;
+}
+
+p {
+  color: map-get($colors, pTextColor) !important;
+}
+
+a {
+  color: map-get($colors, aTextColor) !important;
+}
+
+span {
+  color: map-get($colors, spanTextColor) !important;
+}
+
+ul {
+  background: map-get($colors, ulBgColor);
+}
