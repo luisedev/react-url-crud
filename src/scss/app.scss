@@ -1,59 +1,45 @@
-$bgPrimaryTop: #fc466b;
-$bgPrimaryBottom: #3f5efb;
-
-$cardBg: rgba(255, 255, 255, 0.116);
-
-
-html{
-    background: linear-gradient(90deg, #FC466B, #3F5EFB);
-}
-h2 {
-  color: rgba(41, 40, 40, 0.849) !important;
-  font-weight: 550 !important;
-}
-
-p {
-  color: rgb(24, 24, 24) !important;
-}
-
-a {
-  color: black !important;
-}
-
-span {
-  color: white !important;
-}
+@import "theme.scss";
 
 
 .card {
-  background: $cardBg !important;
-  box-shadow: 0 8px 32px 0 #0f173d8c !important;
+  
+  background: map-get($colors,cardBg) !important;
+  box-shadow: 0 8px 32px 0 map-get($colors,cardShadow) !important;
   backdrop-filter: blur(4px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
   border-radius: 10px;
+  /*animation: cardReveal ease-in;
+  animation-duration: 1s;*/
+
 }
+
+
+// @keyframes cardReveal{
+//   from {opacity: 0.25;
+//   position:absolute;}
+//   to {opacity: 1;}
+// }
 
 .cardActions {
-  background: rgba(19, 18, 18, 0.76) !important;
+  background: map-get($colors,cardActionsbg) !important;
 }
 
-.infoButton{
-    font-weight: 600!important;
+.infoButton {
+  font-weight: 600 !important;
 }
 
 .infoButton:hover {
-  background-color: #1f090ddc !important;
-
+  background-color: map-get($colors,infoButtonHoverBG) !important;
   transition: 1.5s;
 }
 
-.textFieldUrl{
-    background-color: $cardBg !important;
-    padding:2px 0px!important;
-    margin-right: 5px!important;
-    border:1px solid;
+.textFieldUrl {
+  background-color: map-get($colors,cardBg) !important;
+  padding: 2px 0px !important;
+  margin-right: 5px !important;
+  border: 1px solid;
 }
 
-.btnUrl{
-    background-color: #1f090ddc !important;
+.btnUrl {
+  background-color: map-get($colors,btnUrlBgColor) !important;
 }
